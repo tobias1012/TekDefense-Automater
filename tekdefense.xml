@@ -58,14 +58,14 @@
             <entry>VT AS Owner</entry>
             <entry>VT pDNS</entry>
             <entry>VT Malware</entry>
-            <entry>VT Mal URLs</entry>
+	    <entry>VT Mal URLs</entry>
         </sitefriendlyname>
         <regex>
             <entry>asn....(\w+)\"\,</entry>
             <entry>country....(\w+)\"\,</entry>
             <entry>owner....(\w+)\"\,</entry>
             <entry>last_resolved....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2})\"\,\s\"hostname\"\:\s\"(.+?)\"\}</entry>
-            <entry>date....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}).+(\w{64})</entry>
+            <entry>"date....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}).+?": "(\w{64})"</entry>
             <entry>url....(http.+?)\".+?date....(\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2})</entry>
         </regex>
         <fullurl>http://www.virustotal.com/vtapi/v2/ip-address/report</fullurl>
@@ -75,7 +75,7 @@
             <entry>Results</entry>
             <entry>Results</entry>
             <entry>Results</entry>
-            <entry>Results</entry>
+	    <entry>Results</entry>
         </importantproperty>
         <params>
             <entry key="ip">%TARGET%</entry>

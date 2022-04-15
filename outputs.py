@@ -3,14 +3,11 @@ The outputs.py module represents some form of all outputs
 from the Automater program to include all variation of
 output files. Any addition to the Automater that brings
 any other output requirement should be programmed in this module.
-
 Class(es):
 SiteDetailOutput -- Wrapper class around all functions that print output
 from Automater, to include standard output and file system output.
-
 Function(s):
 No global exportable functions are defined.
-
 Exception(s):
 No exceptions exported.
 """
@@ -21,15 +18,18 @@ import re
 from datetime import datetime
 from operator import attrgetter
 
+try:
+  basestring
+except NameError:
+  basestring = str
+
 class SiteDetailOutput(object):
     """
     SiteDetailOutput provides the capability to output information
     to the screen, a text file, a comma-seperated value file, or
     a file formatted with html markup (readable by web browsers).
-
     Public Method(s):
     createOutputInfo
-
     Instance variable(s):
     _listofsites - list storing the list of site results stored.
     """
@@ -37,10 +37,8 @@ class SiteDetailOutput(object):
     def __init__(self,sitelist):
         """
         Class constructor. Stores the incoming list of sites in the _listofsites list.
-
         Argument(s):
         sitelist -- list containing site result information to be printed.
-
         Return value(s):
         Nothing is returned from this Method.
         """
@@ -52,14 +50,11 @@ class SiteDetailOutput(object):
         """
         Checks instance variable _listofsites for content.
         Returns _listofsites if it has content or None if it does not.
-
         Argument(s):
         No arguments are required.
-
         Return value(s):
         _listofsites -- list containing list of site results if variable contains data.
         None -- if _listofsites is empty or not assigned.
-
         Restriction(s):
         This Method is tagged as a Property.
         """
@@ -71,13 +66,10 @@ class SiteDetailOutput(object):
         """
         Checks parser information calls correct print methods based on parser requirements.
         Returns nothing.
-
         Argument(s):
         parser -- Parser object storing program input parameters used when program was run.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -95,13 +87,10 @@ class SiteDetailOutput(object):
         """
         Calls correct function to ensure site information is printed to the user's standard output correctly.
         Returns nothing.
-
         Argument(s):
         printinbotformat -- True or False argument representing minimized output. True if minimized requested.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -115,13 +104,10 @@ class SiteDetailOutput(object):
         """
         Formats site information minimized and prints it to the user's standard output.
         Returns nothing.
-
         Argument(s):
         No arguments are required.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -133,7 +119,7 @@ class SiteDetailOutput(object):
                     for index in range(len(site.RegEx)):  # the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if target != site.Target:
-                            print "\n**_ Results found for: " + site.Target + " _**"
+                            print("\n**_ Results found for: " + site.Target + " _**")
                             target = site.Target
                             # Check for them ALL to be None or 0 length
                         sourceurlhasnoreturn = True
@@ -143,48 +129,48 @@ class SiteDetailOutput(object):
                                     sourceurlhasnoreturn = False
 
                         if sourceurlhasnoreturn:
-                            print '[+] ' + site.SourceURL + ' No results found'
+                            print('[+] ' + site.SourceURL + ' No results found')
                             break
                         else:
                             if siteimpprop is None or len(siteimpprop) == 0:
-                                print "No results in the " + site.FriendlyName[index] + " category"
+                                print("No results in the " + site.FriendlyName[index] + " category")
                             else:
                                 if siteimpprop[index] is None or len(siteimpprop[index]) == 0:
-                                    print site.ReportStringForResult[index] + ' No results found'
+                                    print(site.ReportStringForResult[index] + ' No results found')
                                 else:
                                     laststring = ""
                                     # if it's just a string we don't want it output like a list
                                     if isinstance(siteimpprop[index], basestring):
                                         if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
-                                            print "" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                            print("" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                             laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
                                     # must be a list since it failed the isinstance check on string
                                     else:
                                         laststring = ""
                                         for siteresult in siteimpprop[index]:
                                             if "" + site.ReportStringForResult[index] + " " + str(siteresult) != laststring:
-                                                print "" + site.ReportStringForResult[index] + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                                print("" + site.ReportStringForResult[index] + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                                 laststring = "" + site.ReportStringForResult[index] + " " + str(siteresult)
                 else:#this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
                     if target != site.Target:
-                        print "\n**_ Results found for: " + site.Target + " _**"
+                        print("\n**_ Results found for: " + site.Target + " _**")
                         target = site.Target
                     if siteimpprop is None or len(siteimpprop)==0:
-                        print '[+] ' + site.FriendlyName + ' No results found'
+                        print('[+] ' + site.FriendlyName + ' No results found')
                     else:
                         laststring = ""
                         #if it's just a string we don't want it output like a list
                         if isinstance(siteimpprop, basestring):
                             if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
-                                print "" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                print("" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                 laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
                         #must be a list since it failed the isinstance check on string
                         else:
                             laststring = ""
                             for siteresult in siteimpprop:
                                 if "" + site.ReportStringForResult + " " + str(siteresult) != laststring:
-                                    print "" + site.ReportStringForResult + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                    print("" + site.ReportStringForResult + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                     laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         else:
             pass
@@ -193,13 +179,10 @@ class SiteDetailOutput(object):
         """
         Formats site information correctly and prints it to the user's standard output.
         Returns nothing.
-
         Argument(s):
         No arguments are required.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -211,52 +194,51 @@ class SiteDetailOutput(object):
                     for index in range(len(site.RegEx)):  # the regexs will ensure we have the exact number of lookups
                         siteimpprop = site.getImportantProperty(index)
                         if target != site.Target:
-                            print "\n____________________     Results found for: " + site.Target + "     ____________________"
+                            print("\n____________________     Results found for: " + site.Target + "     ____________________")
                             target = site.Target
                         if siteimpprop is None or len(siteimpprop) == 0:
-                            print "No results in the " + site.FriendlyName[index] + " category"
+                            print("No results in the " + site.FriendlyName[index] + " category")
                         else:
                             if siteimpprop[index] is None or len(siteimpprop[index]) == 0:
-                                print site.ReportStringForResult[index] + ' No results found'
+                                print(site.ReportStringForResult[index] + ' No results found')
                             else:
                                 laststring = ""
                                 # if it's just a string we don't want it output like a list
                                 if isinstance(siteimpprop[index], basestring):
                                     if "" + site.ReportStringForResult[index] + " " + str(siteimpprop) != laststring:
-                                        print "" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                        print("" + site.ReportStringForResult[index] + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                         laststring = "" + site.ReportStringForResult[index] + " " + str(siteimpprop)
                                 # must be a list since it failed the isinstance check on string
                                 else:
                                     laststring = ""
                                     for siteresult in siteimpprop[index]:
                                         if "" + site.ReportStringForResult[index] + " " + str(siteresult) != laststring:
-                                            print "" + site.ReportStringForResult[index] + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                            print("" + site.ReportStringForResult[index] + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                             laststring = "" + site.ReportStringForResult[index] + " " + str(siteresult)
                 else:  # this is a singlesite
                     siteimpprop = site.getImportantProperty(0)
                     if target != site.Target:
-                        print "\n____________________     Results found for: " + site.Target + "     ____________________"
+                        print("\n____________________     Results found for: " + site.Target + "     ____________________")
                         target = site.Target
                     if siteimpprop is None or len(siteimpprop) == 0:
-                        print "No results found in the " + site.FriendlyName
+                        print("No results found in the " + site.FriendlyName)
                     else:
                         laststring = ""
                         # if it's just a string we don't want it output like a list
                         if isinstance(siteimpprop, basestring):
                             if "" + site.ReportStringForResult + " " + str(siteimpprop) != laststring:
-                                print "" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                print("" + site.ReportStringForResult + " " + str(siteimpprop).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                 laststring = "" + site.ReportStringForResult + " " + str(siteimpprop)
                         # must be a list since it failed the isinstance check on string
                         else:
                             laststring = ""
                             for siteresult in siteimpprop:
                                 if "" + site.ReportStringForResult + " " + str(siteresult) != laststring:
-                                    print "" + site.ReportStringForResult + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp')
+                                    print("" + site.ReportStringForResult + " " + str(siteresult).replace('www.', 'www[.]').replace('http', 'hxxp'))
                                     laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         else:
             pass
-
-    def PrintToCEFFile(self,cefoutfile):
+    def PrintToCEFFile(self,cefoutfile: str):
         """
         Formats site information correctly and prints it to an output file in CEF format.
         CEF format specification from http://mita-tac.wikispaces.com/file/view/CEF+White+Paper+071709.pdf
@@ -264,13 +246,10 @@ class SiteDetailOutput(object):
         where message:
         "CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension"
         Returns nothing.
-
         Argument(s):
         cefoutfile -- A string representation of a file that will store the output.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -289,7 +268,7 @@ class SiteDetailOutput(object):
                        cef_SignatureID, cef_Severity, cef_Extension]
         pattern = "^\[\+\]\s+"
         target = ""
-        print '\n[+] Generating CEF output: ' + cefoutfile
+        print('\n[+] Generating CEF output: ' + cefoutfile)
         f = open(cefoutfile, "wb")
         csv.register_dialect('escaped', delimiter='|', escapechar='\\', doublequote=False, quoting=csv.QUOTE_NONE)
         cefRW = csv.writer(f, 'escaped')
@@ -381,26 +360,22 @@ class SiteDetailOutput(object):
 
         f.flush()
         f.close()
-        print "" + cefoutfile + " Generated"
+        print(cefoutfile + " Generated")
 
-
-    def PrintToTextFile(self,textoutfile):
+    def PrintToTextFile(self,textoutfile: str):
         """
         Formats site information correctly and prints it to an output file in text format.
         Returns nothing.
-
         Argument(s):
         textoutfile -- A string representation of a file that will store the output.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print "\n[+] Generating text output: " + textoutfile
+        print("\n[+] Generating text output: " + textoutfile)
         f = open(textoutfile, "w")
         if sites is not None:
             for site in sites:
@@ -451,25 +426,22 @@ class SiteDetailOutput(object):
                                     laststring = "" + site.ReportStringForResult + " " + str(siteresult)
         f.flush()
         f.close()
-        print "" + textoutfile + " Generated"
+        print(textoutfile + " Generated")
 
-    def PrintToCSVFile(self,csvoutfile):
+    def PrintToCSVFile(self,csvoutfile: str):
         """
         Formats site information correctly and prints it to an output file with comma-seperators.
         Returns nothing.
-
         Argument(s):
         csvoutfile -- A string representation of a file that will store the output.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating CSV output: ' + csvoutfile
+        print('\n[+] Generating CSV output: ' + csvoutfile)
         f = open(csvoutfile, "wb")
         csvRW = csv.writer(f, quoting=csv.QUOTE_ALL)
         csvRW.writerow(['Target', 'Type', 'Source', 'Result'])
@@ -545,25 +517,22 @@ class SiteDetailOutput(object):
 
         f.flush()
         f.close()
-        print "" + csvoutfile + " Generated"
+        print(csvoutfile + " Generated")
 
-    def PrintToHTMLFile(self, htmloutfile):
+    def PrintToHTMLFile(self, htmloutfile:str ):
         """
         Formats site information correctly and prints it to an output file using HTML markup.
         Returns nothing.
-
         Argument(s):
         htmloutfile -- A string representation of a file that will store the output.
-
         Return value(s):
         Nothing is returned from this Method.
-
         Restriction(s):
         The Method has no restrictions.
         """
         sites = sorted(self.ListOfSites, key=attrgetter('Target'))
         target = ""
-        print '\n[+] Generating HTML output: ' + htmloutfile
+        print('\n[+] Generating HTML output: ' + htmloutfile)
         f = open(htmloutfile, "w")
         f.write(self.getHTMLOpening())
         if sites is not None:
@@ -632,29 +601,26 @@ class SiteDetailOutput(object):
         f.write(self.getHTMLClosing())
         f.flush()
         f.close()
-        print "" + htmloutfile + " Generated"
-
+        print(htmloutfile + " Generated")
+    
     @classmethod
     def PrintStandardOutput(cls, strout, *args, **kwargs):
         if 'verbose' in kwargs.keys():
             if kwargs['verbose'] is True:
-                print strout
+                print(strout)
             else:
                 return
         else:
-            print strout
+            print(strout)
 
     def getHTMLOpening(self):
         """
         Creates HTML markup to provide correct formatting for initial HTML file requirements.
         Returns string that contains opening HTML markup information for HTML output file.
-
         Argument(s):
         No arguments required.
-
         Return value(s):
         string.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -733,13 +699,10 @@ class SiteDetailOutput(object):
         """
         Creates HTML markup to provide correct formatting for closing HTML file requirements.
         Returns string that contains closing HTML markup information for HTML output file.
-
         Argument(s):
         No arguments required.
-
         Return value(s):
         string.
-
         Restriction(s):
         The Method has no restrictions.
         """
@@ -747,7 +710,7 @@ class SiteDetailOutput(object):
             </table>
             <br>
             <br>
-            <p>Created using Automater.py by @TekDefense <a href="http://www.tekdefense.com">http://www.tekdefense.com</a>; <a href="https://github.com/1aN0rmus/TekDefense">https://github.com/1aN0rmus/TekDefense</a></p>
+            <p>Created using Automater.py by @tobias1012 a fork of tekdefense <a href="http://www.tekdefense.com">http://www.tekdefense.com</a>; <a href="https://github.com/tobias1012/TekDefense-Automater">https://github.com/tobias1012/TekDefense-Automater</a></p>
             </body>
             </html>
             '''

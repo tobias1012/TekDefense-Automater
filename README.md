@@ -1,11 +1,12 @@
 TekDefense-Automater Version: 1.o
 ====================
 
-## THIS IS A REWRITTEN Automater for python 3!, it's not completely featurecomplete, but i strife to be
+## THIS IS A REWRITTEN Automater for python 3!, it's not completely featurecomplete.
+## I do not try to make this a complete copy, i have changes some core concepts, notably the XML file is now a json file, but i try to keep in the spirit of the project
 
 Automater is a tool that I originally created to automate the OSINT analysis of IP addresses. It quickly grew and became a tool to do analysis of IP Addresses, URLs, and Hashes. Unfortunately though, this was my first python project and I made a lot of mistakes, and as the project grew it bacame VERY hard for me to maintain. 
 
-Luckily, a mentor and friend of mine (@jameshub3r) offered his time and expertise to do an enitre re-write of the code that would focus on a modular extensible framework. The new code hits the mark as far as that is concerned. The real power of Automater is how easy it is to modify what sources are checked and what data is taken from them without having to modify the python code. To modify sources simply open up the sites.xml file and modify away. I'll do another post later that goes into more detail there.
+Luckily, a mentor and friend of mine (@jameshub3r) offered his time and expertise to do an enitre re-write of the code that would focus on a modular extensible framework. The new code hits the mark as far as that is concerned. The real power of Automater is how easy it is to modify what sources are checked and what data is taken from them without having to modify the python code.
 
 To view a bit more about installation and usage head over to the new Automater page (http://www.tekdefense.com/automater/).
 
